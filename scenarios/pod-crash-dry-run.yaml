@@ -1,0 +1,19 @@
+name: demo-api-pod-crash
+description: Validate recovery behavior after a controlled application pod failure
+
+failure_type: pod_crash
+
+target:
+  namespace: gameday-demo
+  deployment: demo-api
+  selector: app=demo-api
+
+duration_seconds: 30
+
+dry_run: true
+require_approval: true
+
+success_criteria:
+  max_recovery_seconds: 120
+  minimum_availability_percent: 99.0
+  maximum_error_rate_percent: 5.0
