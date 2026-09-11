@@ -38,7 +38,7 @@ jobs:
             scenarios/pod-crash-dry-run.yaml
 
       - name: Scan container for vulnerabilities
-        uses: aquasecurity/trivy-action@0.33.1
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           image-ref: gameday-orchestrator:test
           format: table
