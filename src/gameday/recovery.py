@@ -31,9 +31,7 @@ def wait_for_deployment_recovery(
             ) from error
 
         desired_replicas = deployment.spec.replicas or 0
-        available_replicas = (
-            deployment.status.available_replicas or 0
-        )
+        available_replicas = deployment.status.available_replicas or 0
         updated_replicas = deployment.status.updated_replicas or 0
 
         if (
@@ -46,6 +44,5 @@ def wait_for_deployment_recovery(
         time.sleep(2)
 
     raise RecoveryTimeoutError(
-        f"Deployment {namespace}/{deployment_name} did not recover "
-        f"within {timeout} seconds."
+        f"Deployment {namespace}/{deployment_name} did not recover within {timeout} seconds."
     )

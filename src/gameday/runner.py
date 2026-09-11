@@ -19,8 +19,7 @@ def run_scenario(scenario: GameDayScenario) -> GameDayResult:
             error_rate_percent=0.0,
             observations=[
                 "Safety validation passed.",
-                f"Dry-run validated failure type: "
-                f"{scenario.failure_type.value}.",
+                f"Dry-run validated failure type: {scenario.failure_type.value}.",
                 "No Kubernetes resources were changed.",
             ],
         )
@@ -34,9 +33,7 @@ def run_scenario(scenario: GameDayScenario) -> GameDayResult:
             scenario=scenario,
         )
     except RecoveryTimeoutError as error:
-        recovery_seconds = float(
-            scenario.success_criteria.max_recovery_seconds + 1
-        )
+        recovery_seconds = float(scenario.success_criteria.max_recovery_seconds + 1)
         observations.append(str(error))
 
     measurement_window = max(

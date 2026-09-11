@@ -20,9 +20,7 @@ def load_scenario(file_path: str | Path) -> GameDayScenario:
         with path.open("r", encoding="utf-8") as scenario_file:
             data = yaml.safe_load(scenario_file)
     except yaml.YAMLError as error:
-        raise ScenarioConfigurationError(
-            f"Invalid YAML in scenario file: {error}"
-        ) from error
+        raise ScenarioConfigurationError(f"Invalid YAML in scenario file: {error}") from error
 
     if not isinstance(data, dict):
         raise ScenarioConfigurationError(
@@ -32,6 +30,4 @@ def load_scenario(file_path: str | Path) -> GameDayScenario:
     try:
         return GameDayScenario.model_validate(data)
     except ValidationError as error:
-        raise ScenarioConfigurationError(
-            f"Scenario validation failed:\n{error}"
-        ) from error
+        raise ScenarioConfigurationError(f"Scenario validation failed:\n{error}") from error

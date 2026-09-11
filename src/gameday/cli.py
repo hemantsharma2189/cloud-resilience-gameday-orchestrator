@@ -17,15 +17,12 @@ from gameday.reporter import (
 from gameday.runner import run_scenario
 from gameday.safety import SafetyViolation
 
-
 console = Console()
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description=(
-            "Run a controlled Kubernetes resilience GameDay scenario."
-        )
+        description=("Run a controlled Kubernetes resilience GameDay scenario.")
     )
     parser.add_argument(
         "scenario",

@@ -21,15 +21,14 @@ class KubernetesFailureInjector:
     def inject(self, scenario: GameDayScenario) -> list[str]:
         if scenario.dry_run:
             return [
-                f"Dry-run: no resources were changed.",
-                f"Would inject {scenario.failure_type.value} into "
-                f"{scenario.target.namespace}/{scenario.target.deployment}.",
+                "Dry-run: no resources were changed.",
+                (f"Would inject {scenario.failure_type.value} into "
+                f"{scenario.target.namespace}/{scenario.target.deployment}."),
             ]
 
         if scenario.failure_type != FailureType.POD_CRASH:
             raise FailureInjectionError(
-                f"Live injection is not implemented for "
-                f"{scenario.failure_type.value}."
+                f"Live injection is not implemented for {scenario.failure_type.value}."
             )
 
         return self._delete_deployment_pod(scenario)
@@ -48,9 +47,7 @@ class KubernetesFailureInjector:
             )
 
             labels = deployment.spec.selector.match_labels or {}
-            selector = ",".join(
-                f"{key}={value}" for key, value in labels.items()
-            )
+            selector = ",".join(f"{key}={value}" for key, value in labels.items())
 
             pods = self.core_api.list_namespaced_pod(
                 namespace=namespace,
@@ -58,9 +55,7 @@ class KubernetesFailureInjector:
             ).items
 
             if not pods:
-                raise FailureInjectionError(
-                    f"No pods found for deployment {deployment_name}."
-                )
+                raise FailureInjectionError(f"No pods found for deployment {deployment_name}.")
 
             pod_name = pods[0].metadata.name
 
@@ -76,6 +71,4 @@ class KubernetesFailureInjector:
             ]
 
         except ApiException as error:
-            raise FailureInjectionError(
-                f"Kubernetes API request failed: {error.reason}"
-            ) from error
+            raise FailureInjectionError(f"Kubernetes API request failed: {error.reason}") from error

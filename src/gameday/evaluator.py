@@ -10,40 +10,22 @@ def evaluate_scenario(
 ) -> GameDayResult:
     criteria = scenario.success_criteria
 
-    recovery_passed = (
-        recovery_seconds <= criteria.max_recovery_seconds
-    )
-    availability_passed = (
-        availability_percent
-        >= criteria.minimum_availability_percent
-    )
-    error_rate_passed = (
-        error_rate_percent
-        <= criteria.maximum_error_rate_percent
-    )
+    recovery_passed = recovery_seconds <= criteria.max_recovery_seconds
+    availability_passed = availability_percent >= criteria.minimum_availability_percent
+    error_rate_passed = error_rate_percent <= criteria.maximum_error_rate_percent
 
-    passed = (
-        recovery_passed
-        and availability_passed
-        and error_rate_passed
-    )
+    passed = recovery_passed and availability_passed and error_rate_passed
 
     result_observations = list(observations or [])
 
     if not recovery_passed:
-        result_observations.append(
-            "Recovery time exceeded the configured objective."
-        )
+        result_observations.append("Recovery time exceeded the configured objective.")
 
     if not availability_passed:
-        result_observations.append(
-            "Availability dropped below the configured SLO."
-        )
+        result_observations.append("Availability dropped below the configured SLO.")
 
     if not error_rate_passed:
-        result_observations.append(
-            "Error rate exceeded the configured threshold."
-        )
+        result_observations.append("Error rate exceeded the configured threshold.")
 
     return GameDayResult(
         scenario_name=scenario.name,

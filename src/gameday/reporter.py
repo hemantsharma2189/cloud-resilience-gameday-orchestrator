@@ -38,9 +38,10 @@ def save_markdown_report(
     timestamp = datetime.now(UTC).strftime("%Y%m%d-%H%M%S")
     report_path = report_directory / f"gameday-{timestamp}.md"
 
-    observations = "\n".join(
-        f"- {observation}" for observation in result.observations
-    ) or "- No additional observations."
+    observations = (
+        "\n".join(f"- {observation}" for observation in result.observations)
+        or "- No additional observations."
+    )
 
     content = f"""# GameDay Incident Report
 
