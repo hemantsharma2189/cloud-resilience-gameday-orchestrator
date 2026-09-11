@@ -34,7 +34,6 @@ def test_scenario_passes_when_all_objectives_are_met() -> None:
     )
 
     assert result.passed is True
-    assert result reminders
     assert result.status == "PASSED"
 
 
