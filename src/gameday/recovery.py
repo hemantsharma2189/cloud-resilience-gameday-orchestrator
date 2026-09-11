@@ -1,9 +1,9 @@
 import time
 
-from kubernetes import client
 from kubernetes.client.exceptions import ApiException
 
 from gameday.models import GameDayScenario
+from kubernetes import client
 
 
 class RecoveryTimeoutError(Exception):

@@ -1,7 +1,7 @@
-from kubernetes import client, config
 from kubernetes.client.exceptions import ApiException
 
 from gameday.models import FailureType, GameDayScenario
+from kubernetes import client, config
 
 
 class FailureInjectionError(Exception):
@@ -22,8 +22,10 @@ class KubernetesFailureInjector:
         if scenario.dry_run:
             return [
                 "Dry-run: no resources were changed.",
-                (f"Would inject {scenario.failure_type.value} into "
-                f"{scenario.target.namespace}/{scenario.target.deployment}."),
+                (
+                    f"Would inject {scenario.failure_type.value} into "
+                    f"{scenario.target.namespace}/{scenario.target.deployment}."
+                ),
             ]
 
         if scenario.failure_type != FailureType.POD_CRASH:
